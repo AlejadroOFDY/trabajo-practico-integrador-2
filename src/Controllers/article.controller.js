@@ -28,7 +28,7 @@ export const createArticle = async (req, res) => {
 // todos
 export const getAllArticles = async (req, res) => {
   try {
-    const article = await ArticleModel.find();
+    const article = await ArticleModel.find().populate("author", "tags");
     return res.status(200).json({
       ok: true,
       data: article,
@@ -45,7 +45,7 @@ export const getAllArticles = async (req, res) => {
 export const getArticleById = async (req, res) => {
   try {
     const { id } = req.params;
-    const article = await ArticleModel.findById(id);
+    const article = await ArticleModel.findById(id).populate("author", "tags");
     return res.status(200).json({
       ok: true,
       data: article,

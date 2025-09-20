@@ -3,10 +3,10 @@ import { CommentModel } from "../Models/comment.model.js";
 // crear
 export const createComment = async (req, res) => {
   try {
-    const { cotent, author, article } = req.body;
+    const { content, author, article } = req.body;
 
     const newComment = await CommentModel.create({
-      cotent,
+      content,
       author,
       article,
     });
@@ -15,6 +15,7 @@ export const createComment = async (req, res) => {
       data: newComment,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       ok: false,
       msg: "Error interno del servidor",
@@ -59,11 +60,11 @@ export const getCommentById = async (req, res) => {
 export const updateComment = async (req, res) => {
   try {
     const { id } = req.params;
-    const { cotent, author, article } = req.body;
+    const { content, author, article } = req.body;
     const comment = await CommentModel.findByIdAndUpdate(
       id,
       {
-        cotent,
+        content,
         author,
         article,
       },

@@ -5,6 +5,7 @@ const TagSchema = new Schema(
     name: {
       type: String,
       required: true,
+      uniqe: true,
     },
     description: {
       type: String,
@@ -12,6 +13,7 @@ const TagSchema = new Schema(
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
 

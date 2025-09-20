@@ -15,22 +15,24 @@ const ArticleSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ("published", "archived"),
-      defaultValue: "archived",
+      enum: ["published", "archived"],
+      defaultValue: "published",
     },
     author: {
       type: Types.ObjectId,
       ref: "User",
       required: true,
     },
-    tags: {
-      type: Types.ObjectId,
-      ref: "Tag",
-      required: true,
-    },
+    tags: [
+      {
+        type: Types.ObjectId,
+        ref: "Tag",
+      },
+    ],
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
 

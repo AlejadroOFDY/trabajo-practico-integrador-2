@@ -4,6 +4,7 @@ const CommentSchema = new Schema(
   {
     content: {
       type: String,
+      required: true,
     },
     author: {
       type: Types.ObjectId,
@@ -18,6 +19,7 @@ const CommentSchema = new Schema(
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
 

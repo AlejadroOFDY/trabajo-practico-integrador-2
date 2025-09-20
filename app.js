@@ -1,15 +1,21 @@
 import express from "express";
 import dotenv from "dotenv";
 import { mongoDB } from "./src/Config/database.js";
-import { UserModel } from "./src/Models/user.model.js";
-import { ArticleModel } from "./src/Models/article.model.js";
-import { TagModel } from "./src/Models/tag.model.js";
-import { CommentModel } from "./src/Models/comment.model.js";
+import userRoute from "./src/Routes/user.route.js";
+import articleRoute from "./src/Routes/article.route.js";
+import tagRoute from "./src/Routes/tag.route.js";
+import commentRoute from "./src/Routes/comment.route.js";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(express.json());
+app.use("/api/user", userRoute);
+app.use("/api/article", articleRoute);
+app.use("/api/tag", tagRoute);
+app.use("/api/comment", commentRoute);
 
 app.listen(PORT, async () => {
   await mongoDB(),
