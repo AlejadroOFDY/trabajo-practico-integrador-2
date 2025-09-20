@@ -1,7 +1,6 @@
 import { Schema, model, Types } from "mongoose";
 
 const CommentSchema = new Schema(
-  "Comment",
   {
     content: {
       type: String,

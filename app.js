@@ -1,6 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
 import { mongoDB } from "./src/Config/database.js";
+import { UserModel } from "./src/Models/user.model.js";
+import { ArticleModel } from "./src/Models/article.model.js";
+import { TagModel } from "./src/Models/tag.model.js";
+import { CommentModel } from "./src/Models/comment.model.js";
 
 dotenv.config();
 

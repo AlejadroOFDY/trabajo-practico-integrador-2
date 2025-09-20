@@ -1,7 +1,6 @@
 import { Schema, model, Types } from "mongoose";
 
 const TagSchema = new Schema(
-  "Tag",
   {
     name: {
       type: String,

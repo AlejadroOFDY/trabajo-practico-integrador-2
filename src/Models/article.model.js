@@ -1,7 +1,6 @@
 import { Schema, Types, model } from "mongoose";
 
 const ArticleSchema = new Schema(
-  "Article",
   {
     title: {
       type: String,
