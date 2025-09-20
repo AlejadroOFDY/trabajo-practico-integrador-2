@@ -96,8 +96,8 @@ export const deleteArticle = async (req, res) => {
   try {
     const { id } = req.params;
     await CommentModel.deleteMany({ article: id });
-    await ArticleModel.findByIdAndDelete(id);
     await TagModel.updateMany({ tags: id }, { $pull: { tags: id } });
+    await ArticleModel.findByIdAndDelete(id);
 
     return res.status(200).json({
       ok: true,
