@@ -16,7 +16,7 @@ const ArticleSchema = new Schema(
     status: {
       type: String,
       enum: ["published", "archived"],
-      defaultValue: "published",
+      default: "published",
     },
     author: {
       type: Types.ObjectId,

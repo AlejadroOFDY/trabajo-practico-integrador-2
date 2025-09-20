@@ -24,3 +24,10 @@ const CommentSchema = new Schema(
 );
 
 export const CommentModel = model("Comment", CommentSchema);
+
+/* CommentSchema.virtual("article", {
+  ref: "Article",
+  localField: "_id",
+  foreignField: "Comment",
+}); 
+Acá no puede ir esto porque no existe en el modelo article*/

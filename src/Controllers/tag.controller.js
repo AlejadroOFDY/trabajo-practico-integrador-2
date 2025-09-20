@@ -24,7 +24,7 @@ export const createTag = async (req, res) => {
 // todos
 export const getAllTags = async (req, res) => {
   try {
-    const tag = await TagModel.find();
+    const tag = await TagModel.find().populate("article");
     return res.status(200).json({
       ok: true,
       data: tag,
@@ -41,7 +41,7 @@ export const getAllTags = async (req, res) => {
 export const getTagById = async (req, res) => {
   try {
     const { id } = req.params;
-    const tag = await TagModel.findById(id);
+    const tag = await TagModel.findById(id).populate("article");
     return res.status(200).json({
       ok: true,
       data: tag,

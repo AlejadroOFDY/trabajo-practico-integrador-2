@@ -1,4 +1,7 @@
 import { UserModel } from "../Models/user.model.js";
+import { ArticleModel } from "../Models/article.model.js";
+import { CommentModel } from "../Models/comment.model.js";
+import { TagModel } from "../Models/tag.model.js";
 
 // crear
 export const createUser = async (req, res) => {
@@ -27,7 +30,7 @@ export const createUser = async (req, res) => {
 // todos
 export const getAllUsers = async (req, res) => {
   try {
-    const user = await UserModel.find();
+    const user = await UserModel.find().populate("articles");
     return res.status(200).json({
       ok: true,
       data: user,
@@ -44,7 +47,7 @@ export const getAllUsers = async (req, res) => {
 export const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await UserModel.findById(id);
+    const user = await UserModel.findById(id).populate("articles");
     return res.status(200).json({
       ok: true,
       data: user,
@@ -91,6 +94,9 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
+    await ArticleModel.deleteMany({ author: id });
+    await TagModel.updateMany({ tags: id }, { $pull: { tags: id } });
+    await CommentModel.deleteMany({ author: id });
     await UserModel.findByIdAndDelete(id);
 
     return res.status(200).json({
