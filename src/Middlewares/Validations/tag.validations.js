@@ -1,5 +1,5 @@
 import { body, param } from "express-validator";
-import { TagModel } from "../models/tag.model.js";
+import { TagModel } from "../../Models/tag.model.js";
 
 // Id
 export const getTagByIdValidation = [
@@ -21,11 +21,7 @@ export const createTagValidation = [
     .withMessage("Faltan campos obligatorios")
     .isLength({ min: 2, max: 30 })
     .withMessage("El nombre debe tener entre 2 y 30 caracteres inclusive")
-    .custom((value) => {
-      if (value.includes(" ")) {
-        throw new Error("El nombre no puede contener espacios");
-      }
-    })
+    .trim()
     .custom(async (value) => {
       const existingTag = await TagModel.findOne({ name: value });
       if (existingTag) {
@@ -55,11 +51,7 @@ export const updateTagValidation = [
     .withMessage("El campo no puede estar vacío")
     .isLength({ min: 2, max: 30 })
     .withMessage("El nombre debe tener entre 2 y 30 caracteres inclusive")
-    .custom((value) => {
-      if (value.includes(" ")) {
-        throw new Error("El nombre no puede contener espacios");
-      }
-    })
+    .trim()
     .custom(async (value, { req }) => {
       const existingTag = await TagModel.findOne({
         name: value,

@@ -14,6 +14,7 @@ export const createTag = async (req, res) => {
       data: newTag,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       ok: false,
       msg: "Error interno del servidor",

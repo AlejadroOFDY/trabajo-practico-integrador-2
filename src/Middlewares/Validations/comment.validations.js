@@ -1,7 +1,7 @@
 import { body, param } from "express-validator";
-import { CommentModel } from "../models/comment.model.js";
-import { UserModel } from "../models/user.model.js";
-import { ArticleModel } from "../models/article.model.js";
+import { CommentModel } from "../../Models/comment.model.js";
+import { UserModel } from "../../Models/user.model.js";
+import { ArticleModel } from "../../Models/article.model.js";
 
 // Id
 export const getCommentByIdValidation = [
