@@ -8,12 +8,21 @@ import {
   deleteArticle,
 } from "../Controllers/article.controller.js";
 
+import { validator } from "../Middlewares/validator.js";
+
+import {
+  createArticleValidation,
+  getArticleByIdValidation,
+  updateArticleValidation,
+  deleteArticleValidation,
+} from "../Middlewares/Validations/article.validations.js";
+
 const router = Router();
 
-router.post("/", createArticle);
+router.post("/", createArticleValidation, validator, createArticle);
 router.get("/", getAllArticles);
-router.get("/:id", getArticleById);
-router.put("/:id", updateArticle);
-router.delete("/:id", deleteArticle);
+router.get("/:id", getArticleByIdValidation, validator, getArticleById);
+router.put("/:id", updateArticleValidation, validator, updateArticle);
+router.delete("/:id", deleteArticleValidation, validator, deleteArticle);
 
 export default router;

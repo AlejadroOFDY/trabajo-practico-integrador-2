@@ -97,7 +97,7 @@ export const deleteUser = async (req, res) => {
     await ArticleModel.deleteMany({ author: id });
     await TagModel.updateMany({ tags: id }, { $pull: { tags: id } });
     await CommentModel.deleteMany({ author: id });
-    await UserModel.findOneAndUpdate(id, {
+    await UserModel.findById(id, {
       deleted: true,
     });
 

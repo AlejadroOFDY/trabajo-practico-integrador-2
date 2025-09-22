@@ -8,12 +8,21 @@ import {
   deleteComment,
 } from "../Controllers/comment.controller.js";
 
+import { validator } from "../Middlewares/validator.js";
+
+import {
+  getCommentByIdValidation,
+  createCommentValidation,
+  updateCommentValidation,
+  deleteCommentValidation,
+} from "../Middlewares/Validations/comment.validations.js";
+
 const router = Router();
 
-router.post("/", createComment);
+router.post("/", createCommentValidation, validator, createComment);
 router.get("/", getAllComments);
-router.get("/:id", getCommentById);
-router.put("/:id", updateComment);
-router.delete("/:id", deleteComment);
+router.get("/:id", getCommentByIdValidation, validator, getCommentById);
+router.put("/:id", updateCommentValidation, validator, updateComment);
+router.delete("/:id", deleteCommentValidation, validator, deleteComment);
 
 export default router;

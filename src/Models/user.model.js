@@ -11,7 +11,6 @@ const UserSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      match: /.+\@.+\..+/,
     },
     password: {
       type: String,
@@ -21,27 +20,25 @@ const UserSchema = new Schema(
       enum: ["user", "admin"],
       default: "user",
     },
-    profile: [
-      {
-        firstName: {
-          type: String,
-          required: true,
-        },
-        lastName: {
-          type: String,
-          required: true,
-        },
-        biography: {
-          type: String,
-        },
-        avatarUrl: {
-          type: String,
-        },
-        birthDate: {
-          type: Date,
-        },
+    profile: {
+      firstName: {
+        type: String,
+        required: true,
       },
-    ],
+      lastName: {
+        type: String,
+        required: true,
+      },
+      biography: {
+        type: String,
+      },
+      avatarUrl: {
+        type: String,
+      },
+      birthDate: {
+        type: Date,
+      },
+    },
     deleted: {
       type: Boolean,
       default: false,
