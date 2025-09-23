@@ -12,10 +12,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use("/api/user", userRoute);
-app.use("/api/article", articleRoute);
-app.use("/api/tag", tagRoute);
-app.use("/api/comment", commentRoute);
+app.use("/api/users", userRoute);
+app.use("/api/articles", articleRoute);
+app.use("/api/tags", tagRoute);
+app.use("/api/comments", commentRoute);
 
 app.listen(PORT, async () => {
   await mongoDB(),
