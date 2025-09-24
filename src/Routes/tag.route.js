@@ -17,12 +17,43 @@ import {
   deleteTagValidation,
 } from "../Middlewares/Validations/tag.validations.js";
 
+import { authMiddleware } from "../Middlewares/auth.middleware.js";
+import { adminMiddleware } from "../Middlewares/Validations/admin.middleware.js";
+
 const router = Router();
 
-router.post("/", createTagValidation, validator, createTag);
-router.get("/", getAllTags);
-router.get("/:id", getTagByIdValidation, validator, getTagById);
-router.put("/:id", updateTagValidation, validator, updateTag);
-router.delete("/:id", deleteTagValidation, validator, deleteTag);
+router.post(
+  "/",
+  createTagValidation,
+  validator,
+  authMiddleware,
+  adminMiddleware,
+  createTag
+);
+router.get("/", authMiddleware, getAllTags);
+router.get(
+  "/:id",
+  getTagByIdValidation,
+  validator,
+  authMiddleware,
+  adminMiddleware,
+  getTagById
+);
+router.put(
+  "/:id",
+  updateTagValidation,
+  validator,
+  authMiddleware,
+  adminMiddleware,
+  updateTag
+);
+router.delete(
+  "/:id",
+  deleteTagValidation,
+  validator,
+  authMiddleware,
+  adminMiddleware,
+  deleteTag
+);
 
 export default router;

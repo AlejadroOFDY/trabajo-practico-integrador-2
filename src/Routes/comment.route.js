@@ -17,12 +17,43 @@ import {
   deleteCommentValidation,
 } from "../Middlewares/Validations/comment.validations.js";
 
+import { authMiddleware } from "../Middlewares/auth.middleware.js";
+import { adminMiddleware } from "../Middlewares/Validations/admin.middleware.js";
+
 const router = Router();
 
-router.post("/", createCommentValidation, validator, createComment);
-router.get("/", getAllComments);
-router.get("/:id", getCommentByIdValidation, validator, getCommentById);
-router.put("/:id", updateCommentValidation, validator, updateComment);
-router.delete("/:id", deleteCommentValidation, validator, deleteComment);
+router.post(
+  "/",
+  createCommentValidation,
+  validator,
+  authMiddleware,
+  adminMiddleware,
+  createComment
+);
+router.get("/", authMiddleware, getAllComments);
+router.get(
+  "/:id",
+  getCommentByIdValidation,
+  validator,
+  authMiddleware,
+  adminMiddleware,
+  getCommentById
+);
+router.put(
+  "/:id",
+  updateCommentValidation,
+  validator,
+  authMiddleware,
+  adminMiddleware,
+  updateComment
+);
+router.delete(
+  "/:id",
+  deleteCommentValidation,
+  validator,
+  authMiddleware,
+  adminMiddleware,
+  deleteComment
+);
 
 export default router;

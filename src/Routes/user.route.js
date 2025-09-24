@@ -17,12 +17,37 @@ import {
   deleteUserValidation,
 } from "../Middlewares/Validations/user.validations.js";
 
+import { authMiddleware } from "../Middlewares/auth.middleware.js";
+
+import { adminMiddleware } from "../Middlewares/Validations/admin.middleware.js";
+
 const router = Router();
 
 router.post("/", createUserValidation, validator, createUser);
-router.get("/", getAllUsers);
-router.get("/:id", getUserByIdValidation, validator, getUserById);
-router.put("/:id", updateUserValidation, validator, updateUser);
-router.delete("/:id", deleteUserValidation, validator, deleteUser);
+router.get("/", authMiddleware, adminMiddleware, getAllUsers);
+router.get(
+  "/:id",
+  getUserByIdValidation,
+  validator,
+  authMiddleware,
+  adminMiddleware,
+  getUserById
+);
+router.put(
+  "/:id",
+  updateUserValidation,
+  validator,
+  authMiddleware,
+  adminMiddleware,
+  updateUser
+);
+router.delete(
+  "/:id",
+  deleteUserValidation,
+  validator,
+  authMiddleware,
+  adminMiddleware,
+  deleteUser
+);
 
 export default router;
