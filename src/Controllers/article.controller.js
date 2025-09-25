@@ -1,6 +1,7 @@
 import { ArticleModel } from "../Models/article.model.js";
 import { CommentModel } from "../Models/comment.model.js";
 import { TagModel } from "../Models/tag.model.js";
+import { UserModel } from "../Models/user.model.js";
 
 // crear
 export const createArticle = async (req, res) => {
@@ -53,6 +54,26 @@ export const getArticleById = async (req, res) => {
       data: article,
     });
   } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      msg: "Error interno del servidor",
+    });
+  }
+};
+
+// my article
+export const getMyArticle = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const myArticles = await ArticleModel.find({ author: userId });
+
+    res.status(200).json({
+      ok: true,
+      data: myArticles,
+    });
+  } catch (error) {
+    console.log(error);
     return res.status(500).json({
       ok: false,
       msg: "Error interno del servidor",

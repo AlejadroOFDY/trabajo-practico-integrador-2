@@ -4,6 +4,8 @@ import {
   createComment,
   getAllComments,
   getCommentById,
+  getCommentByArticle,
+  getMyComment,
   updateComment,
   deleteComment,
 } from "../Controllers/comment.controller.js";
@@ -18,6 +20,7 @@ import {
 } from "../Middlewares/Validations/comment.validations.js";
 
 import { authMiddleware } from "../Middlewares/auth.middleware.js";
+import { ownerOrAdminMiddleware } from "../Middlewares/ownerOrAdmin.middleware.js";
 
 const router = Router();
 
@@ -28,7 +31,8 @@ router.post(
   authMiddleware,
   createComment
 );
-router.get("/", authMiddleware, getAllComments);
+router.get("/comments/article/:articleId", authMiddleware, getCommentByArticle);
+router.get("/my", authMiddleware, getMyComment);
 router.get(
   "/:id",
   getCommentByIdValidation,
@@ -40,14 +44,14 @@ router.put(
   "/:id",
   updateCommentValidation,
   validator,
-  authMiddleware,
+  ownerOrAdminMiddleware,
   updateComment
 );
 router.delete(
   "/:id",
   deleteCommentValidation,
   validator,
-  authMiddleware,
+  ownerOrAdminMiddleware,
   deleteComment
 );
 

@@ -56,6 +56,39 @@ export const getCommentById = async (req, res) => {
   }
 };
 
+// my Comment
+export const getMyComment = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const myComment = await CommentModel.findOne({ author: userId });
+    return res.status(200).json({
+      ok: true,
+      data: myComment,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      msg: "Error interno del servidor",
+    });
+  }
+};
+
+// get Comment By Article
+export const getCommentByArticle = async (req, res) => {
+  try {
+    const articleId = req.params;
+    const comments = await CommentModel.findOne({
+      article: articleId,
+    }).populate("author");
+    return res.status(200).json({ ok: true, data: comments });
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      msg: "Error Interno del Servidor",
+    });
+  }
+};
+
 // actualizar
 export const updateComment = async (req, res) => {
   try {

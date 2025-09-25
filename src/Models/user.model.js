@@ -40,9 +40,9 @@ const UserSchema = new Schema(
         type: Date,
       },
     },
-    deleted: {
-      type: Boolean,
-      default: false,
+    deletedAt: {
+      type: Date,
+      default: null,
     },
   },
   {

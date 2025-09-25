@@ -4,9 +4,15 @@ import {
   createArticle,
   getAllArticles,
   getArticleById,
+  getMyArticle,
   updateArticle,
   deleteArticle,
 } from "../Controllers/article.controller.js";
+
+import {
+  extraTag,
+  deleteTagFromArticle,
+} from "../Controllers/articleTag.controller.js";
 
 import { validator } from "../Middlewares/validator.js";
 
@@ -18,6 +24,7 @@ import {
 } from "../Middlewares/Validations/article.validations.js";
 
 import { authMiddleware } from "../Middlewares/auth.middleware.js";
+import { ownerOrAdminMiddleware } from "../Middlewares/ownerOrAdmin.middleware.js";
 
 const router = Router();
 
@@ -28,7 +35,14 @@ router.post(
   authMiddleware,
   createArticle
 );
+router.post(
+  "/:articleId/tags/:tagId",
+  validator,
+  ownerOrAdminMiddleware,
+  extraTag
+);
 router.get("/", authMiddleware, getAllArticles);
+router.get("/my", authMiddleware, getMyArticle);
 router.get(
   "/:id",
   getArticleByIdValidation,
@@ -40,15 +54,21 @@ router.put(
   "/:id",
   updateArticleValidation,
   validator,
-  authMiddleware,
+  ownerOrAdminMiddleware,
   updateArticle
 );
 router.delete(
   "/:id",
   deleteArticleValidation,
   validator,
-  authMiddleware,
+  ownerOrAdminMiddleware,
   deleteArticle
+);
+router.delete(
+  "/:articleId/tags/:tagId",
+  validator,
+  ownerOrAdminMiddleware,
+  deleteTagFromArticle
 );
 
 export default router;
