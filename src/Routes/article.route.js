@@ -18,7 +18,6 @@ import {
 } from "../Middlewares/Validations/article.validations.js";
 
 import { authMiddleware } from "../Middlewares/auth.middleware.js";
-import { adminMiddleware } from "../Middlewares/Validations/admin.middleware.js";
 
 const router = Router();
 
@@ -27,7 +26,6 @@ router.post(
   createArticleValidation,
   validator,
   authMiddleware,
-  adminMiddleware,
   createArticle
 );
 router.get("/", authMiddleware, getAllArticles);
@@ -36,7 +34,6 @@ router.get(
   getArticleByIdValidation,
   validator,
   authMiddleware,
-  adminMiddleware,
   getArticleById
 );
 router.put(
@@ -44,7 +41,6 @@ router.put(
   updateArticleValidation,
   validator,
   authMiddleware,
-  adminMiddleware,
   updateArticle
 );
 router.delete(
@@ -52,7 +48,6 @@ router.delete(
   deleteArticleValidation,
   validator,
   authMiddleware,
-  adminMiddleware,
   deleteArticle
 );
 

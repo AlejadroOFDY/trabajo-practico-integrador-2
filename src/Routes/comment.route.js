@@ -18,7 +18,6 @@ import {
 } from "../Middlewares/Validations/comment.validations.js";
 
 import { authMiddleware } from "../Middlewares/auth.middleware.js";
-import { adminMiddleware } from "../Middlewares/Validations/admin.middleware.js";
 
 const router = Router();
 
@@ -27,7 +26,6 @@ router.post(
   createCommentValidation,
   validator,
   authMiddleware,
-  adminMiddleware,
   createComment
 );
 router.get("/", authMiddleware, getAllComments);
@@ -36,7 +34,6 @@ router.get(
   getCommentByIdValidation,
   validator,
   authMiddleware,
-  adminMiddleware,
   getCommentById
 );
 router.put(
@@ -44,7 +41,6 @@ router.put(
   updateCommentValidation,
   validator,
   authMiddleware,
-  adminMiddleware,
   updateComment
 );
 router.delete(
@@ -52,7 +48,6 @@ router.delete(
   deleteCommentValidation,
   validator,
   authMiddleware,
-  adminMiddleware,
   deleteComment
 );
 

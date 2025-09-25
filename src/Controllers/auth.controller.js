@@ -38,7 +38,7 @@ export const login = async (req, res) => {
     if (!user) {
       return res.status(401).json({ msg: "Credenciales inválidas" });
     }
-    const validPassword = comparePassword(password, user.password);
+    const validPassword = await comparePassword(password, user.password);
     if (!validPassword) {
       return res.status(401).json({ msg: "Credenciales inválidas" });
     }
@@ -62,4 +62,59 @@ export const login = async (req, res) => {
 export const logout = async (req, res) => {
   res.clearCookie("token");
   return res.status(200).json({ ok: true, msg: "Logout exitoso" });
+};
+
+export const getProfile = async (req, res) => {
+  try {
+    const user = req.user;
+
+    return res.status(200).json({
+      ok: true,
+      data: user,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      msg: "Error interno del servidor",
+    });
+  }
+};
+
+export const updateProfile = async (req, res) => {
+  try {
+    const { username, email, profile } = req.body;
+    const userId = req.user.id;
+
+    // Verificar unicidad de username/email
+    if (username || email) {
+      const existingUser = await UserModel.findOne({
+        $or: [{ email }, { username }],
+        _id: { $ne: userId },
+      });
+
+      if (existingUser) {
+        return res.status(400).json({
+          ok: false,
+          msg: "El username o email ya está en uso",
+        });
+      }
+    }
+
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      { username, email, profile },
+      { new: true }
+    ).select("-password");
+
+    return res.status(200).json({
+      ok: true,
+      msg: "Perfil actualizado exitosamente",
+      data: updatedUser,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      msg: "Error interno del servidor",
+    });
+  }
 };

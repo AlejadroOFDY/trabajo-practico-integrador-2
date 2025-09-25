@@ -31,14 +31,7 @@ router.post(
   createTag
 );
 router.get("/", authMiddleware, getAllTags);
-router.get(
-  "/:id",
-  getTagByIdValidation,
-  validator,
-  authMiddleware,
-  adminMiddleware,
-  getTagById
-);
+router.get("/:id", getTagByIdValidation, validator, authMiddleware, getTagById);
 router.put(
   "/:id",
   updateTagValidation,
