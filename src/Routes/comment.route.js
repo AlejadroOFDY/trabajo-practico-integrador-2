@@ -44,6 +44,7 @@ router.put(
   "/:id",
   updateCommentValidation,
   validator,
+  authMiddleware,
   ownerOrAdminMiddleware,
   updateComment
 );
@@ -51,6 +52,7 @@ router.delete(
   "/:id",
   deleteCommentValidation,
   validator,
+  authMiddleware,
   ownerOrAdminMiddleware,
   deleteComment
 );

@@ -1,4 +1,5 @@
 import { TagModel } from "../Models/tag.model.js";
+import { ArticleModel } from "../Models/article.model.js";
 
 // crear
 export const createTag = async (req, res) => {
@@ -86,6 +87,7 @@ export const updateTag = async (req, res) => {
 export const deleteTag = async (req, res) => {
   try {
     const { id } = req.params;
+    await ArticleModel.updateMany({ tags: id }, { $pull: { tags: id } });
     await TagModel.findByIdAndDelete(id);
 
     return res.status(200).json({

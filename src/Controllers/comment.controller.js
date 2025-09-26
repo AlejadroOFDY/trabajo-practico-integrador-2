@@ -77,7 +77,7 @@ export const getMyComment = async (req, res) => {
 export const getCommentByArticle = async (req, res) => {
   try {
     const articleId = req.params;
-    const comments = await CommentModel.findOne({
+    const comments = await CommentModel.find({
       article: articleId,
     }).populate("author");
     return res.status(200).json({ ok: true, data: comments });

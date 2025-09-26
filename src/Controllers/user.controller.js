@@ -30,7 +30,7 @@ export const createUser = async (req, res) => {
 // todos
 export const getAllUsers = async (req, res) => {
   try {
-    const user = await UserModel.find().populate("articles");
+    const user = await UserModel.find({ deletedAt: null }).populate("articles");
     return res.status(200).json({
       ok: true,
       data: user,
@@ -47,7 +47,9 @@ export const getAllUsers = async (req, res) => {
 export const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await UserModel.findById(id).populate("articles");
+    const user = await UserModel.findById(id, { deletedAt: null }).populate(
+      "articles"
+    );
     return res.status(200).json({
       ok: true,
       data: user,
@@ -97,8 +99,8 @@ export const deleteUser = async (req, res) => {
     await ArticleModel.deleteMany({ author: id });
     await TagModel.updateMany({ tags: id }, { $pull: { tags: id } });
     await CommentModel.deleteMany({ author: id });
-    await UserModel.findById(id, {
-      deleted: true,
+    await UserModel.findByIdAndUpdate(id, {
+      deletedAt: new Date(),
     });
 
     return res.status(200).json({

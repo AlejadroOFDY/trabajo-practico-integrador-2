@@ -28,6 +28,10 @@ export const deleteTagFromArticle = async (req, res) => {
     const deleteTag = await ArticleModel.findByIdAndUpdate(articleId, {
       $pull: { tags: tagId },
     });
+    return res.status(200).json({
+      ok: true,
+      msg: "Se removió la etiqueta del artículo",
+    });
   } catch (error) {
     return res.status(400).json({
       ok: false,
